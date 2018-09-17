@@ -105,7 +105,7 @@ int remove_spaces(char *text, char *dest, int text_size){
 
   dest[i] = '\0';
 
-  return i - 1;
+  return i;
 }
 
 int encrypt(char *dest, char *text, int text_size, Matrix *key_matrix) {
@@ -117,10 +117,14 @@ int encrypt(char *dest, char *text, int text_size, Matrix *key_matrix) {
   }
 
   //must be par CHANGE IT
-  if(text_size%2 != 0){
-    text[text_size] = 'a';
-    text_size++;
-
+  if(text_size%key_matrix->width != 0){
+  	
+  	int i;
+  	for(i = 0; i < text_size%key_matrix->width; i++){
+  		text[text_size + i] = 'a';
+	}
+	
+    text_size+= text_size%key_matrix->width;
     
     printf("%s - %d - \n", text, text_size);
   }
@@ -144,6 +148,9 @@ int encrypt(char *dest, char *text, int text_size, Matrix *key_matrix) {
       dest[pivo + i] = mult_matrix.mat[ matrix_index(i, 0, mult_matrix.width) ] % 26 + 97;
     }
   }
+  
+  dest[text_size] = '\0';
+  
   return 1;  
 }
 
@@ -155,15 +162,13 @@ int main(void) {
   };
   Matrix mat = matrix_init(2, 2, &matt[0][0]);
 
-  char dest[50];
-  char *text = "elias paulino";
+  char dest[449];
+  char text[449] = "o cuidado em identificar pontos criticos na valorizacao de fatores subjetivos causa impacto indireto na reavaliacao dos conhecimentos estrategicos para atingir a excelencia no mundo atual a hegemonia do ambiente politico agrega valor ao estabelecimento do processo de comunicacao como um todo por conseguinte a estrutura atual da organizacao acarreta um processo de reformulacao e modernizacao das condicoes financeiras e administrativas exigidas";
   
-  int size = remove_spaces(text, dest, 12);
-  text = dest;
+  int size = remove_spaces(text, dest, 446);
 
+  encrypt(text, dest, size, &mat);
 
-  //encrypt(dest, text, size, &mat);
-
-  printf("%s - %d - \n", text, size);
+  printf("%s", text);
   return 0;
 }
