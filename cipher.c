@@ -35,7 +35,7 @@ int matrix_multiply(int s_width, int f_height, int f_width, int result[f_height]
   	/*faz a multiplicacao de duas matrizes*/
   
   
-  	//o pivo é eh o f_col e o s_row, que sao os mesmos
+  	//o pivo Ã© eh o f_col e o s_row, que sao os mesmos
   	int pivo, f_row, s_col;
   	for(f_row = 0; f_row < f_height; f_row++) {
     	for(s_col = 0; s_col < s_width; s_col++) {
@@ -56,7 +56,7 @@ int modular_inverse(int num, int base) {
   	int inverse;
   	for(inverse = 1; inverse < base; inverse++) {
 
-    	//o inverso de um numero em uma base é um numero cuja multiplicacao por ele da resto 1 na tal base
+    	//o inverso de um numero em uma base Ã© um numero cuja multiplicacao por ele da resto 1 na tal base
     	if((inverse * num) % base == 1) {
       		return inverse;
     	}
@@ -65,7 +65,7 @@ int modular_inverse(int num, int base) {
 }
 
 int remove_unwanted_words(char *dest, char *text, int text_size){
-	/*remove os espaços do texto*/
+	/*remove os espaÃ§os do texto*/
 	
 	int i, j;	
 	i = j = 0;
@@ -92,9 +92,10 @@ int fill_missing_spaces(char *text, int text_size){
   		for(i = 0; i < space_to_fill; i++){
   			text[text_size + i] = 'a';
 		}
-	
+	    
+	    text[text_size + space_to_fill] = '\0';
   	}
-  
+    
   	return text_size + space_to_fill;
 }
  
