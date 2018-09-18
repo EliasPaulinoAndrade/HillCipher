@@ -133,16 +133,22 @@ int encrypt(char *dest, char *text, int text_size, int key_matrix[GAP][GAP]) {
 }
 
 int main(void) {
-	int mat[GAP][GAP] = {
-    	{25, 22},
-    	{1, 23}
+	int encrypt_key[GAP][GAP] = {
+    	{2, 3},
+    	{5, 7}
   	};
+  	
+  	int decrypt_key[GAP][GAP] = {
+    	{19, 3},
+    	{5, }
+  	};
+
 
   	char dest[3067];
   	char text[3067] = "todas estas questoes devidamente ponderadas levantam duvidas sobre se a necessidade de renovacao processual ainda nao demonstrou convincentemente que vai participar na mudanca dos indices pretendidos o que temos que ter sempre em mente e que o julgamento imparcial das eventualidades estende o alcance e a importancia das diversas correntes de pensamento a nivel organizacional a execucao dos pontos do programa acarreta um processo de reformulacao e modernizacao das condicoes financeiras e administrativas exigidas acima de tudo e fundamental ressaltar que a valorizacao de fatores subjetivos desafia a capacidade de equalizacao dos paradigmas corporativos gostaria de enfatizar que o novo modelo estrutural aqui preconizado maximiza as possibilidades por conta das formas de acao todavia a continua expansao de nossa atividade causa impacto indireto na reavaliacao do processo de comunicacao como um todo e claro que a consulta aos diversos militantes pode nos levar a considerar a reestruturacao das condicoes inegavelmente apropriadas evidentemente a adocao de politicas descentralizadoras afeta positivamente a correta previsao dos metodos utilizados na avaliacao de resultados desta maneira a complexidade dos estudos efetuados representa uma abertura para a melhoria das direcoes preferenciais no sentido do progresso neste sentido o desafiador cenario globalizado oferece uma interessante oportunidade para verificacao das novas proposicoes no entanto nao podemos esquecer que o entendimento das metas propostas auxilia a preparacao e a composicao dos niveis de motivacao departamental nunca e demais lembrar o peso e o significado destes problemas uma vez que a revolucao dos costumes nao pode mais se dissociar do investimento em reciclagem tecnica a certificacao de metodologias que nos auxiliam a lidar com o aumento do dialogo entre os diferentes setores produtivos obstaculiza a apreciacao da importancia do levantamento das variaveis envolvidas percebemos cada vez mais que a constante divulgacao das informacoes deve passar por modificacoes independentemente das diretrizes de desenvolvimento para o futuro ainda assim existem duvidas a respeito de como o comprometimento entre as equipes apresenta tendencias no sentido de aprovar a manutencao de todos os recursos funcionais envolvidos por outro lado a hegemonia do ambiente politico nos obriga a analise do sistema de formacao de quadros que corresponde as necessidades no mundo atual a consolidacao das estruturas garante a contribuicao de um grupo importante na determinacao das posturas dos orgaos dirigentes com relacao as suas atribuicoes por conseguinte a mobilidade dos capitais internacionais e uma das consequencias dos conhecimentos estrategicos para atingir a excelencia o incentivo ao avanco tecnologico assim como o acompanhamento das preferencias de consumo assume importantes posicoes no estabelecimento do retorno esperado a longo prazo e importante questionar o quanto o consenso sobre a necessidade de qualificacao estimula a padronizacao do remanejamento dos quadros funcionais";
   
-  	encrypt(dest, text, 3066, mat);
-
+  	encrypt(dest, text, 3066, encrypt_key);
   	printf("%s", text);
+  	
   	return 0;
 }
