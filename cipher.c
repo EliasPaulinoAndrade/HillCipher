@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 #define TRUE 1
 #define FALSE 0
@@ -199,16 +200,28 @@ int main(int argc, char *argv[]) {
     	{5, 28}
   	};
   	
-	char dest[4000];
-  	char text[4000] = TEXT_EXAMPLE;
-  	
-  	int size;
-  
-  	size = encrypt(dest, text, strlen(text), encrypt_key);
-  	printf("%s [SIZE: %d]\n\n", dest, size);
-  	
-  	encrypt(text, dest, size, decrypt_key);
-  	printf("%s\n\n", text);	
+  	if(argc == 2) {
+		char dest[4000];
+	  	char text[4000] = "";
+		strcat(text, argv[1]);
+	  	int size;
+	  
+	  	size = encrypt(dest, text, strlen(text), encrypt_key);
+	  	printf("%s [SIZE: %d]\n\n", dest, size);
+	  	
+	  	encrypt(text, dest, size, decrypt_key);
+	  	printf("%s\n\n", text);	
 
+	}else{
+		char dest[4000];
+	  	char text[4000] = TEXT_EXAMPLE;
+	  	int size;
+	  
+	  	size = encrypt(dest, text, strlen(text), encrypt_key);
+	  	printf("%s [SIZE: %d]\n\n", dest, size);
+	  	
+	  	encrypt(text, dest, size, decrypt_key);
+	  	printf("%s\n\n", text);	
+	}
   	return 0;
 }
