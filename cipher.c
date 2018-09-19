@@ -2,13 +2,21 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define TRUE 1
+#define FALSE 0
+
 #define GAP 2
-#define alphabet_size 27
+#define FILL_CHAR ' '
+#define ALPHABET_SIZE 29
 
 int char_to_number(char c){
 	switch(c){
-		case '.':
+		case ' ':
 			return 26;
+		case '.':
+			return 27;
+		case ',':
+			return 28;
 		default:
 			return c - 97;
 	}
@@ -17,7 +25,11 @@ int char_to_number(char c){
 char number_to_char(int i){
 	switch(i){
 		case 26:
+			return ' ';
+		case 27:
 			return '.';
+		case 28:
+			return ',';
 		default:
 			return i + 97;
 	}
@@ -70,22 +82,29 @@ int modular_inverse(int num, int base) {
   	return -1;
 }
 
-int remove_unwanted_words(char *dest, char *text, int text_size){
+int remove_unwanted_words(char *dest, char *text, int text_size, char *exceptions){
 	/*remove os espaços do texto*/
 	
-	int i, j;	
-	i = j = 0;
-  	while(j < text_size){
-    	if(text[j] != ' '){
-      		dest[i] = text[j];
-      		i++;
+	int dest_counter, text_counter, except_counter, has_exceptions;	
+	dest_counter = text_counter = except_counter = has_exceptions = 0;
+  	while(text_counter < text_size){
+  		has_exceptions = FALSE;
+  		for(except_counter = 0; except_counter< strlen(exceptions); except_counter++){
+  			if(exceptions[except_counter] == text[text_counter]){
+				has_exceptions = TRUE;	
+			}
+		}
+		  
+    	if(has_exceptions == FALSE){
+      		dest[dest_counter] = text[text_counter];
+      		dest_counter++;
     	}
-    	j++;
+    	text_counter++;
   	}
 
-  	dest[i] = '\0';
+  	dest[dest_counter] = '\0';
 
-  	return i;
+  	return dest_counter;
 }
 
 int fill_missing_spaces(char *text, int text_size){
@@ -96,7 +115,7 @@ int fill_missing_spaces(char *text, int text_size){
   	
   		int i;
   		for(i = 0; i < space_to_fill; i++){
-  			text[text_size + i] = 'a';
+  			text[text_size + i] = FILL_CHAR;
 		}
 	    
 	    text[text_size + space_to_fill] = '\0';
@@ -109,8 +128,8 @@ int fill_missing_spaces(char *text, int text_size){
 int encrypt(char *dest, char *text, int text_size, int key_matrix[GAP][GAP]) {
   //encripta o texto usando uma matrix chave
 
-  	char accord_text[text_size];
-  	text_size = remove_unwanted_words(accord_text, text, text_size);
+  	char *accord_text = text;
+  	//text_size = remove_unwanted_words(accord_text, text, text_size);
   
   	text_size = fill_missing_spaces(accord_text, text_size);
 
@@ -126,7 +145,7 @@ int encrypt(char *dest, char *text, int text_size, int key_matrix[GAP][GAP]) {
 		matrix_multiply(1, GAP, GAP, mult_items, key_matrix, gap_items);	
 
     	for(i = 0; i < GAP; i++){
-      		dest[pivo + i] = number_to_char(mult_items[i][0] % alphabet_size);
+      		dest[pivo + i] = number_to_char(mult_items[i][0] % ALPHABET_SIZE);
    		}
   	}
   
@@ -143,13 +162,12 @@ int main(int argc, char *argv[]) {
   	};
   	
   	int decrypt_key[GAP][GAP] = {
-    	{19, 3},
-    	{5, 24}
+    	{22, 3},
+    	{5, 27}
   	};
   	
-  	
 	char dest[3067];
-  	char text[3067] = "todas estas questoes devidamente ponderadas levantam duvidas sobre se a necessidade de renovacao processual ainda nao demonstrou convincentemente que vai participar na mudanca dos indices pretendidos o que temos que ter sempre em mente e que o julgamento imparcial das eventualidades estende o alcance e a importancia das diversas correntes de pensamento a nivel organizacional a execucao dos pontos do programa acarreta um processo de reformulacao e modernizacao das condicoes financeiras e administrativas exigidas acima de tudo e fundamental ressaltar que a valorizacao de fatores subjetivos desafia a capacidade de equalizacao dos paradigmas corporativos gostaria de enfatizar que o novo modelo estrutural aqui preconizado maximiza as possibilidades por conta das formas de acao todavia a continua expansao de nossa atividade causa impacto indireto na reavaliacao do processo de comunicacao como um todo e claro que a consulta aos diversos militantes pode nos levar a considerar a reestruturacao das condicoes inegavelmente apropriadas evidentemente a adocao de politicas descentralizadoras afeta positivamente a correta previsao dos metodos utilizados na avaliacao de resultados desta maneira a complexidade dos estudos efetuados representa uma abertura para a melhoria das direcoes preferenciais no sentido do progresso neste sentido o desafiador cenario globalizado oferece uma interessante oportunidade para verificacao das novas proposicoes no entanto nao podemos esquecer que o entendimento das metas propostas auxilia a preparacao e a composicao dos niveis de motivacao departamental nunca e demais lembrar o peso e o significado destes problemas uma vez que a revolucao dos costumes nao pode mais se dissociar do investimento em reciclagem tecnica a certificacao de metodologias que nos auxiliam a lidar com o aumento do dialogo entre os diferentes setores produtivos obstaculiza a apreciacao da importancia do levantamento das variaveis envolvidas percebemos cada vez mais que a constante divulgacao das informacoes deve passar por modificacoes independentemente das diretrizes de desenvolvimento para o futuro ainda assim existem duvidas a respeito de como o comprometimento entre as equipes apresenta tendencias no sentido de aprovar a manutencao de todos os recursos funcionais envolvidos por outro lado a hegemonia do ambiente politico nos obriga a analise do sistema de formacao de quadros que corresponde as necessidades no mundo atual a consolidacao das estruturas garante a contribuicao de um grupo importante na determinacao das posturas dos orgaos dirigentes com relacao as suas atribuicoes por conseguinte a mobilidade dos capitais internacionais e uma das consequencias dos conhecimentos estrategicos para atingir a excelencia o incentivo ao avanco tecnologico assim como o acompanhamento das preferencias de consumo assume importantes posicoes no estabelecimento do retorno esperado a longo prazo e importante questionar o quanto o consenso sobre a necessidade de qualificacao estimula a padronizacao do remanejamento dos quadros funcionais";
+  	char text[3067] = "elias paulino andrade, lindo.";
   
   	int size;
   
@@ -157,8 +175,7 @@ int main(int argc, char *argv[]) {
   	printf("%s [SIZE: %d]\n\n", dest, size);
   	
   	encrypt(text, dest, size, decrypt_key);
-  	printf("%s", text);
-	
-  
+  	printf("%s\n\n", text);
+
   	return 0;
 }
