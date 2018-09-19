@@ -7,9 +7,17 @@
 
 #define GAP 2
 #define FILL_CHAR ' '
-#define ALPHABET_SIZE 29
+#define ALPHABET_SIZE 30
+
+#define TEXT_EXAMPLE "Todas estas questoes, devidamente ponderadas, levantam duvidas sobre se a mobilidade dos capitais internacionais possibilita uma melhor visao global dos paradigmas corporativos. Acima de tudo, e fundamental ressaltar que a estrutura atual da organizacao pode nos levar a considerar a reestruturacao do retorno esperado a longo prazo. O incentivo ao avanco tecnologico, assim como a continua expansao de nossa atividade agrega valor ao estabelecimento do sistema de formacao de quadros que corresponde as necessidades. Caros amigos, o surgimento do comercio virtual oferece uma interessante oportunidade para verificacao do sistema de participacao geral. A nivel organizacional, o desenvolvimento continuo de distintas formas de atuacao afeta positivamente a correta previsao dos procedimentos normalmente adotados. \n\
+          		No entanto, nao podemos esquecer que o consenso sobre a necessidade de qualificacao exige a precisao e a definicao da gestao inovadora da qual fazemos parte. Podemos ja vislumbrar o modo pelo qual o comprometimento entre as equipes maximiza as possibilidades por conta do orcamento setorial. A certificacao de metodologias que nos auxiliam a lidar com o aumento do dialogo entre os diferentes setores produtivos nos obriga a analise de alternativas as solucoes ortodoxas. \n\
+				Desta maneira, a valorizacao de fatores subjetivos e uma das consequencias dos metodos utilizados na avaliacao de resultados. Todavia, o julgamento imparcial das eventualidades estimula a padronizacao dos conhecimentos estrategicos para atingir a excelencia. Ainda assim, existem duvidas a respeito de como a complexidade dos estudos efetuados deve passar por modificacoes independentemente das direcoes preferenciais no sentido do progresso. \n\
+				Neste sentido, o inicio da atividade geral de formacao de atitudes prepara-nos para enfrentar situacoes atipicas decorrentes das posturas dos orgaos dirigentes com relacao as suas atribuicoes. O que temos que ter sempre em mente e que o acompanhamento das preferencias de consumo representa uma abertura para a melhoria dos modos de operacao convencionais. Pensando mais a longo prazo, a consolidacao das estruturas causa impacto indireto na reavaliacao do levantamento das variaveis envolvidas. \n\
+				E claro que a crescente influencia da midia talvez venha a ressaltar a relatividade dos relacionamentos verticais entre as hierarquias. As experiencias acumuladas demonstram que a expansao dos mercados mundiais acarreta um processo de reformulacao e modernizacao das diversas correntes de pensamento. Por outro lado, a hegemonia do ambiente politico auxilia a preparacao e a composicao das regras de conduta normativas. Nunca e demais lembrar o peso e o significado destes problemas, uma vez que o fenomeno da Internet nao pode mais se dissociar dos indices pretendidos. \n\
+  		        Por conseguinte, a consulta aos diversos militantes desafia a capacidade de equalizacao do investimento em reciclagem tecnica. Do mesmo modo, o entendimento das metas propostas promove a alavancagem das formas de acao. No mundo atual, a determinacao clara de objetivos apresenta tendencias no sentido de aprovar a manutencao dos niveis de motivacao departamental."
 
 int char_to_number(char c){
+	
 	switch(c){
 		case ' ':
 			return 26;
@@ -17,8 +25,13 @@ int char_to_number(char c){
 			return 27;
 		case ',':
 			return 28;
+		case '\n':
+			return 29;
 		default:
-			return c - 97;
+			if(c >= 'a' && c <= 'z') {
+				return c - 97;
+			}
+			return -1;
 	}
 }
 
@@ -30,8 +43,13 @@ char number_to_char(int i){
 			return '.';
 		case 28:
 			return ',';
+		case 29:
+			return '\n';
 		default:
-			return i + 97;
+			if(i >= 0 && i <= 25) {
+				return i + 97;
+			}
+			return -1;
 	}
 }
 
@@ -82,6 +100,14 @@ int modular_inverse(int num, int base) {
   	return -1;
 }
 
+void string_to_lower_case(char *text){
+	
+	int i;
+	for(i = 0; i < strlen(text); i++){
+		text[i] = tolower(text[i]);	
+	}
+}
+
 int remove_unwanted_words(char *dest, char *text, int text_size, char *exceptions){
 	/*remove os espaços do texto*/
 	
@@ -95,7 +121,7 @@ int remove_unwanted_words(char *dest, char *text, int text_size, char *exception
 			}
 		}
 		  
-    	if(has_exceptions == FALSE){
+    	if(has_exceptions == FALSE && char_to_number(text[text_counter]) != -1){
       		dest[dest_counter] = text[text_counter];
       		dest_counter++;
     	}
@@ -124,13 +150,21 @@ int fill_missing_spaces(char *text, int text_size){
   	return text_size + space_to_fill;
 }
  
+int format_text(char *dest, char *text, int text_size){
+	
+	string_to_lower_case(text);
+	text_size = remove_unwanted_words(dest, text, text_size, "");
+	text_size = fill_missing_spaces(dest, text_size);
+	
+	return text_size;
+}
 
 int encrypt(char *dest, char *text, int text_size, int key_matrix[GAP][GAP]) {
   //encripta o texto usando uma matrix chave
 
-  	char *accord_text = text;
+  	char accord_text[text_size];
   
-  	text_size = fill_missing_spaces(accord_text, text_size);
+  	text_size = format_text(accord_text, text, text_size);
 
   	int gap_items[GAP][1]; 
   	int mult_items[GAP][1];
@@ -161,20 +195,20 @@ int main(int argc, char *argv[]) {
   	};
   	
   	int decrypt_key[GAP][GAP] = {
-    	{22, 3},
-    	{5, 27}
+    	{23, 3},
+    	{5, 28}
   	};
   	
-	char dest[3067];
-  	char text[3067] = "gostaria de enfatizar que o inicio da atividade geral de formacao de atitudes afeta positivamente a correta previsao do remanejamento dos quadros funcionais. e claro que a estrutura atual da organizacao estende o alcance e a importancia dos niveis de motivacao departamental. desta maneira, o surgimento do comercio virtual nos obriga a analise do fluxo de informacoes. no entanto, nao podemos esquecer que a competitividade nas transacoes comerciais prepara-nos para enfrentar situacoes atipicas decorrentes dos indices pretendidos. no mundo atual, o aumento do dialogo entre os diferentes setores produtivos cumpre um papel essencial na formulacao das regras de conduta normativas. nao obstante, a constante divulgacao das informacoes aponta para a melhoria das direcoes preferenciais no sentido do progresso. por outro lado, a adocao de politicas descentralizadoras acarreta um processo de reformulacao e modernizacao dos relacionamentos verticais entre as hierarquias. caros amigos, o julgamento imparcial das eventualidades maximiza as possibilidades por conta do sistema de participacao geral. do mesmo modo, a crescente influencia da midia garante a contribuicao de um grupo importante na determinacao do orcamento setorial. o que temos que ter sempre em mente e que o comprometimento entre as equipes exige a precisao e a definicao das condicoes financeiras e administrativas exigidas. percebemos, cada vez mais, que a hegemonia do ambiente politico e uma das consequencias dos metodos utilizados na avaliacao de resultados. acima de tudo, e fundamental ressaltar que o consenso sobre a necessidade de qualificacao estimula a padronizacao do retorno esperado a longo prazo. o incentivo ao avanco tecnologico, assim como a valorizacao de fatores subjetivos auxilia a preparacao e a composicao de alternativas as solucoes ortodoxas. todas estas questoes, devidamente ponderadas, levantam duvidas sobre se a consolidacao das estruturas causa impacto indireto na reavaliacao das novas proposicoes. neste sentido, a complexidade dos estudos efetuados obstaculiza a apreciacao da importancia do impacto na agilidade decisoria. as experiencias acumuladas demonstram que a continua expansao de nossa atividade ainda nao demonstrou convincentemente que vai participar na mudanca do levantamento das variaveis envolvidas. o incentivo ao avanco tecnologico, assim como a valorizacao de fatores subjetivos auxilia a preparacao e a composicao de alternativas as solucoes ortodoxas. todas estas questoes, devidamente ponderadas, levantam duvidas sobre se a consolidacao das estruturas causa impacto indireto na reavaliacao das novas proposicoes. neste sentido, a complexidade dos estudos efetuados obstaculiza a apreciacao da importancia do impacto na agilidade decisoria. as experiencias acumuladas demonstram que a continua expansao de nossa atividade ainda nao demonstrou convincentemente que vai participar na mudanca do levantamento das variaveis envolvidas. convincentemente que vai participar na mudanca do levantamento das variaveis envolvidas.";
-  
+	char dest[4000];
+  	char text[4000] = TEXT_EXAMPLE;
+  	
   	int size;
   
   	size = encrypt(dest, text, strlen(text), encrypt_key);
   	printf("%s [SIZE: %d]\n\n", dest, size);
   	
   	encrypt(text, dest, size, decrypt_key);
-  	printf("%s\n\n", text);
+  	printf("%s\n\n", text);	
 
   	return 0;
 }
