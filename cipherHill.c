@@ -63,7 +63,7 @@ char number_to_char(int i) {
             charc = '\n';
             break;
 	default:
-            if (i >= 0 && i <= 25){
+            if(i >= 0 && i <= 25) {
                 charc = i + 97;
             }
     }
@@ -79,7 +79,6 @@ void matrix_show(int width, int height, int matrix[][width]) {
     int col, row;
 
     for(row = 0; row < height; row++) {
-
         for(col = 0; col < width; col++) {
 
             printf("[%d]\t", matrix[row][col]);
@@ -111,26 +110,26 @@ int modular_inverse(int num, int base){
 
     /*encontra o inverso modular de um numero em uma certa base*/
     int inverse;
-    for (inverse = 1; inverse < base; inverse++){
+    for(inverse = 1; inverse < base; inverse++) {
         
         /*o inverso em um numero em uma base um numero cuja multiplicacao por ele da resto 1 na tal base*/
-        if ((inverse * num) % base == 1) {
+        if((inverse * num) % base == 1) {
             return inverse;
         }
     }
     return WRONG;
 }
 
-void string_to_lower_case (char *text, int text_size) {
+void string_to_lower_case(char *text, int text_size) {
 
     int i;
-    for (i = 0; i < text_size; i++){
+    for(i = 0; i < text_size; i++) {
         text[i] = tolower(text[i]);
     }
 }
 
 
-int remove_unwanted_words (char *dest, char *text, int text_size, char *exceptions) {
+int remove_unwanted_words(char *dest, char *text, int text_size, char *exceptions) {
 
     /*remove os espacos do texto*/
     
@@ -147,7 +146,7 @@ int remove_unwanted_words (char *dest, char *text, int text_size, char *exceptio
             }
         }
         
-        if (has_exceptions == FALSE && char_to_number(text[text_counter]) != WRONG){
+        if(has_exceptions == FALSE && char_to_number(text[text_counter]) != WRONG) {
             dest[dest_counter] = text[text_counter];
             dest_counter++;
         }
@@ -159,7 +158,7 @@ int remove_unwanted_words (char *dest, char *text, int text_size, char *exceptio
     return dest_counter;
 }
 
-int fill_missing_spaces(char *text, int text_size){
+int fill_missing_spaces(char *text, int text_size) {
 
     /*preenche o texto para que ele tenha numero de letras multiplo do gap*/
 
@@ -196,15 +195,16 @@ int encrypt(char *dest, char *text, int text_size, int key_matrix[][GAP]) {
     int mult_items [GAP][1];
     int pivo, i;
 
-    for(pivo = 0; pivo < text_size; pivo += GAP){
-        for (i = pivo; i < pivo + GAP; i++) {
+    for(pivo = 0; pivo < text_size; pivo += GAP) {
+        for(i = pivo; i < pivo + GAP; i++) {
 
             gap_items[i - pivo][0] = char_to_number(accord_text[i]);
         }
 
         matrix_multiply(1, GAP, GAP, mult_items, key_matrix, gap_items);
 
-        for (i = 0; i < GAP; i++){
+        for(i = 0; i < GAP; i++) {
+            
             dest[pivo + i] = number_to_char(mult_items[i][0] % ALPHABET_SIZE);
         }
     }
@@ -212,7 +212,7 @@ int encrypt(char *dest, char *text, int text_size, int key_matrix[][GAP]) {
     return text_size;
 }
 
-int write_to_file(char *text, char *file_path){
+int write_to_file(char *text, char *file_path) {
     FILE *file = fopen(file_path, "w");
     
     if(file == NULL) {
@@ -233,7 +233,7 @@ int read_from_file(char *dest, int max_size, char *file_path) {
     }
     
     char c, i = 0;
-    while ((c = getc(file)) != EOF && i < max_size - 1){
+    while ((c = getc(file)) != EOF && i < max_size - 1) {
         dest[i++] = c;
     }
     dest[i] = '\0';
@@ -272,15 +272,25 @@ int main (int argc, char *argv[]) {
         printf("%s", dest);
         
     }else if(argc == 2 && strcmp(argv[1], "example") == 0) {
-		strcat(text, TEXT_EXAMPLE);
+        strcat(text, TEXT_EXAMPLE);
 
         size = encrypt(dest, text, strlen(text), encrypt_key);
-        printf("Cifrado: {%s}\n", dest);
+        printf("Cifrado: {%s}\n\n", dest);
 
 		size = encrypt(text, dest, size, decrypt_key);
         printf("Decrifrado: {%s}\n", text);
 	
-    }else if(argc == 5 && strcmp(argv[1], "enc") == 0 && strcmp(argv[3], "toFile") == 0){
+    }else if(argc == 3 && strcmp(argv[1], "example") == 0) {
+        strcat(text, argv[2]);
+
+        size = encrypt(dest, text, strlen(text), encrypt_key);
+        printf("Cifrado: {%s}\n\n", dest);
+
+		size = encrypt(text, dest, size, decrypt_key);
+        printf("Decrifrado: {%s}\n", text);
+	
+    }
+    else if(argc == 5 && strcmp(argv[1], "enc") == 0 && strcmp(argv[3], "toFile") == 0) {
         strcat(text, argv[2]);
         
         size = encrypt(dest, text, strlen(text), encrypt_key);
@@ -289,7 +299,7 @@ int main (int argc, char *argv[]) {
         }else {
             printf("Error While Writing in File.\n");
         }
-    }else if(argc == 3 && strcmp(argv[1], "decFromFile") == 0){
+    }else if(argc == 3 && strcmp(argv[1], "decFromFile") == 0) {
         char file_text[4000];
         
         if(read_from_file(file_text, 4000, argv[2]) == OK) {
