@@ -244,6 +244,16 @@ int read_from_file(char *dest, int max_size, char *file_path) {
 
 int main (int argc, char *argv[]) {
 
+    int encrypt_key[GAP][GAP] = {
+        {2,3},
+        {5,7}
+    };
+
+    int decrypt_key[GAP][GAP] = {
+        {23,3},
+        {5,28}
+    };
+    
     char dest[4000];
     char text[4000] = "";
     int size;
@@ -294,6 +304,6 @@ int main (int argc, char *argv[]) {
     else {
         printf("Invalid Command.\n");
     }
-	return 0;
+    return 0;
 }
 

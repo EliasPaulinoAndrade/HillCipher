@@ -9,13 +9,3 @@ Neste sentido, o inicio da atividade geral de formacao de atitudes prepara-nos p
 E claro que a crescente influencia da midia talvez venha a ressaltar a relatividade dos relacionamentos verticais entre as hierarquias. As experiencias acumuladas demonstram que a expansao dos mercados mundiais acarreta um processo de reformulacao e modernizacao das diversas correntes de pensamento. Por outro lado, a hegemonia do ambiente politico auxilia a preparacao e a composicao das regras de conduta normativas. Nunca e demais lembrar o peso e o significado destes problemas, uma vez que o fenomeno da Internet nao pode mais se dissociar dos indices pretendidos. \n\
 Por conseguinte, a consulta aos diversos militantes desafia a capacidade de equalizacao do investimento em reciclagem tecnica. Do mesmo modo, o entendimento das metas propostas promove a alavancagem das formas de acao. No mundo atual, a determinacao clara de objetivos apresenta tendencias no sentido de aprovar a manutencao dos niveis de motivacao departamental."
 
-
-int encrypt_key[GAP][GAP] = {
-    {2,3},
-    {5,7}
-};
-
-int decrypt_key[GAP][GAP] = {
-    {23,3},
-    {5,28}
-};
