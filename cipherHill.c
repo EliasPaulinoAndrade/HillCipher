@@ -155,7 +155,7 @@ int remove_unwanted_words (char *dest, char *text, int text_size, char *exceptio
     }
 
     dest[dest_counter] = '\0';
-
+    
     return dest_counter;
 }
 
@@ -185,14 +185,12 @@ int format_text(char *dest, char *text, int text_size) {
     return text_size;
 }
 
-int encrypt(char *dest, char *text, int text_size, int key_matrix[][GAP], int way) {
+int encrypt(char *dest, char *text, int text_size, int key_matrix[][GAP]) {
 
     /*encripta o texto usando uma matrix chave*/
-    char accord_text[text_size];
+    char accord_text[4000];
 
     text_size = format_text(accord_text, text, text_size);
-    
-    matrix_show(2, 2, key_matrix);
 
     int gap_items[GAP][1];
     int mult_items [GAP][1];
@@ -204,13 +202,7 @@ int encrypt(char *dest, char *text, int text_size, int key_matrix[][GAP], int wa
             gap_items[i - pivo][0] = char_to_number(accord_text[i]);
         }
 
-        if(way == 1){
-            matrix_multiply(1, GAP, GAP, mult_items, encrypt_key, gap_items);
-        }
-        else{
-            matrix_multiply(1, GAP, GAP, mult_items, decrypt_key, gap_items);
-        }
-
+        matrix_multiply(1, GAP, GAP, mult_items, key_matrix, gap_items);
 
         for (i = 0; i < GAP; i++){
             dest[pivo + i] = number_to_char(mult_items[i][0] % ALPHABET_SIZE);
@@ -246,7 +238,6 @@ int read_from_file(char *dest, int max_size, char *file_path) {
     }
     dest[i] = '\0';
     
-    
     fclose(file);
     return OK;
 }
@@ -257,33 +248,32 @@ int main (int argc, char *argv[]) {
     char text[4000] = "";
     int size;
     
-    
     if(argc == 3 && strcmp(argv[1], "enc") == 0) {
         strcat(text, argv[2]);
         
-        size = encrypt(dest, text, strlen(text), encrypt_key, 1);
+        size = encrypt(dest, text, strlen(text), encrypt_key);
         printf("%s", dest);
         
     }
     else if(argc == 3 && strcmp(argv[1], "dec") == 0) {
         strcat(text, argv[2]);
         
-        size = encrypt(dest, text, strlen(text), decrypt_key, 2);
+        size = encrypt(dest, text, strlen(text), decrypt_key);
         printf("%s", dest);
         
     }else if(argc == 2 && strcmp(argv[1], "example") == 0) {
 		strcat(text, TEXT_EXAMPLE);
 
-        size = encrypt(dest, text, strlen(text), encrypt_key, 1);
+        size = encrypt(dest, text, strlen(text), encrypt_key);
         printf("Cifrado: {%s}\n", dest);
 
-		size = encrypt(text, dest, size, decrypt_key, 2);
+		size = encrypt(text, dest, size, decrypt_key);
         printf("Decrifrado: {%s}\n", text);
 	
     }else if(argc == 5 && strcmp(argv[1], "enc") == 0 && strcmp(argv[3], "toFile") == 0){
         strcat(text, argv[2]);
         
-        size = encrypt(dest, text, strlen(text), encrypt_key, 1);
+        size = encrypt(dest, text, strlen(text), encrypt_key);
         if(write_to_file(dest, argv[4]) == OK) {
             printf("Done.\n");
         }else {
@@ -294,7 +284,7 @@ int main (int argc, char *argv[]) {
         
         if(read_from_file(file_text, 4000, argv[2]) == OK) {
 	     strcat(text, file_text);
-             size = encrypt(dest, text, strlen(text), decrypt_key, 2);
+             size = encrypt(dest, text, strlen(text), decrypt_key);
         
              printf("%s", dest); 
         }else {
