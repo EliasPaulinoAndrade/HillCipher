@@ -204,8 +204,12 @@ int encrypt(char *dest, char *text, int text_size, int key_matrix[][GAP]) {
         matrix_multiply(1, GAP, GAP, mult_items, key_matrix, gap_items);
 
         for(i = 0; i < GAP; i++) {
-            
-            dest[pivo + i] = number_to_char(mult_items[i][0] % ALPHABET_SIZE);
+            if(mult_items[i][0] < 0) {
+                dest[pivo + i] = number_to_char(ALPHABET_SIZE - (-mult_items[i][0]) % ALPHABET_SIZE);
+            }
+            else{                
+                dest[pivo + i] = number_to_char(mult_items[i][0] % ALPHABET_SIZE);        
+            }
         }
     }
     dest[text_size] = '\0';
