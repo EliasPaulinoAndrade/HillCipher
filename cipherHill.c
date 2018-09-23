@@ -1,8 +1,30 @@
+/* 
+* file: cipherHill.c
+* Authors: Elias Paulino e Cibele Paulino
+*
+* Entrada: Sequencia de caracteres a ser codificada                                                                                         (ajeitar aqui)
+* Saida: Sequencia de caracteres codificada e a sequencia decodificada
+*
+* Plataforma Alvo: Raspberry pi 3
+* 
+* O presente algoritmo foi implementado com referencia a Cifra de Hill desenvolvida em 1929 por Lester S. Hill, sendo um  
+* trabalho concebido para a disciplina de Sistemas Embarcados do Curso de Engenharia de Computacao do IFCE - Campus Fortaleza. 
+*
+* As seguintes fontes foram usadas como referencia: Cifra de Hill <cts.luziania.ifg.edu.br/index.php/CTS1/article/download/100/pdf_30>, 
+* Uma adaptação da Cifra de Hill para estudo de matrizes <http://www.repositorio.ufop.br/bitstream/123456789/9170/1/DISSERTA%C3%87%C3%83O_
+* Adapta%C3%A7%C3%A3oCifraHill.pdf> e Criptografia e Algebra <http://www.mat.ufmg.br/~marques/CRIPTOGRAFIA.pdf>. 
+*
+* Copyright (C) 2018 Elias Paulino <eliaspaulinoandrade@gmail.com>
+* Copyright (C) 2018 Cibele Paulino <cibelepandrade@gmail.com>
+* Data de atualização: 23 de setembro de 2018
+*/
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "config.c"
+#include "config4x4_30.c"
 
 #define TRUE 1
 #define FALSE 0
@@ -10,6 +32,17 @@
 #define OK 0
 #define WRONG -1 
 
+
+/*Função : Transformar um caractere em um correspondente numerico
+ * 
+ * Entrada : Um caractere
+ * Retorno : Correspondente numerico do caractere ou -1 (WRONG)
+ * Saída   : NENHUMA 
+ 
+ * Variáveis Locais: num -> guarda o correspondente numerico do caractere ou -1 caso nao tenha representacao no alfabeto utilizado
+ * Variáveis Globais Usadas : NENHUMA
+ * Variáveis Globais Alteradas : NENHUMA
+*/
 int char_to_number(char c) {
     
     int num = WRONG;
@@ -40,6 +73,16 @@ int char_to_number(char c) {
     return num;
 }
 
+/*Função : Transformar um numero em um caractere correspondente
+ * 
+ * Entrada : Um numero
+ * Retorno : Caractere correspondente do numero ou -1 (WRONG)
+ * Saída   : NENHUMA 
+ 
+ * Variáveis Locais: charc -> guarda o caractere correspondente do numero ou -1 caso nao tenha representacao no alfabeto utilizado
+ * Variáveis Globais Usadas : NENHUMA
+ * Variáveis Globais Alteradas : NENHUMA
+*/
 char number_to_char(int i) {
 
     char charc = WRONG;
@@ -71,9 +114,17 @@ char number_to_char(int i) {
     return charc;
 }
 
+/*Função : Mostrar o tamanho x profundidade de uma matriz, assim como uma matriz qualquer na saida
+ * 
+ * Entrada : Width da matriz, height da matriz e a matriz
+ * Retorno : NADA
+ * Saída   : Tamanho da matriz no formato "width: x, height: y" e matriz no formato n x n 
+ 
+ * Variáveis Locais: col -> guarda a coluna atual, row -> guarda a linha atual.
+ * Variáveis Globais Usadas : NENHUMA
+ * Variáveis Globais Alteradas : NENHUMA
+*/
 void matrix_show(int width, int height, int matrix[][width]) {
-
-    /*imprime a matriz*/
     
     printf ("width: %d, height: %d\n", width, height);
     int col, row;
@@ -161,8 +212,12 @@ int remove_unwanted_words(char *dest, char *text, int text_size, char *exception
 int fill_missing_spaces(char *text, int text_size) {
 
     /*preenche o texto para que ele tenha numero de letras multiplo do gap*/
-
-    int space_to_fill = text_size % GAP;
+    
+    int space_to_fill = text_size % GAP;   
+    
+    if(space_to_fill > 0){
+        space_to_fill = (GAP - space_to_fill);
+    }
 
     int i;
     for (i = 0; i < space_to_fill; i++){
@@ -202,14 +257,23 @@ int encrypt(char *dest, char *text, int text_size, int key_matrix[][GAP]) {
         }
 
         matrix_multiply(1, GAP, GAP, mult_items, key_matrix, gap_items);
+        //matrix_show(1, 4, gap_items);
+        
 
-        for(i = 0; i < GAP; i++) {
+        for(i = 0; i < GAP; i++) {            
             if(mult_items[i][0] < 0) {
-                dest[pivo + i] = number_to_char(ALPHABET_SIZE - (-mult_items[i][0]) % ALPHABET_SIZE);
+                if((-mult_items[i][0] % ALPHABET_SIZE) == 0) {
+                    dest[pivo + i] = number_to_char(0);
+                }
+                else{
+                    dest[pivo + i] = number_to_char(ALPHABET_SIZE - (-mult_items[i][0]) % ALPHABET_SIZE);
+                }        
             }
             else{                
                 dest[pivo + i] = number_to_char(mult_items[i][0] % ALPHABET_SIZE);        
             }
+           // printf("%d - %c\n", mult_items[i][0], dest[pivo + i]);
+
         }
     }
     dest[text_size] = '\0';
@@ -236,7 +300,7 @@ int read_from_file(char *dest, int max_size, char *file_path) {
         return WRONG;
     }
     
-    char c, i = 0;
+    int c, i = 0;
     while ((c = getc(file)) != EOF && i < max_size - 1) {
         dest[i++] = c;
     }
@@ -247,16 +311,6 @@ int read_from_file(char *dest, int max_size, char *file_path) {
 }
 
 int main (int argc, char *argv[]) {
-
-    int encrypt_key[GAP][GAP] = {
-        {2,3},
-        {5,7}
-    };
-
-    int decrypt_key[GAP][GAP] = {
-        {23,3},
-        {5,28}
-    };
     
     char dest[4000];
     char text[4000] = "";
