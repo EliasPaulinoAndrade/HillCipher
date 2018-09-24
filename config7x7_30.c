@@ -1,8 +1,8 @@
 /* 
-* file: config4x4_30.c
+* file: config7x7_30.c
 * Authors: Elias Paulino e Cibele Paulino
 *
-* Configuracao com matriz 4x4 e alfabeto com 30 letras/caracteres
+* Configuracao com matriz 7x7 e alfabeto com 30 letras/caracteres
 *
 * Copyright (C) 2018 Elias Paulino <eliaspaulinoandrade@gmail.com>
 * Copyright (C) 2018 Cibele Paulino <cibelepandrade@gmail.com>

@@ -52,6 +52,7 @@
  * Variáveis Locais: char dest -> vetor/ponteiro para vetor que guarda o texto final, pode ser o texto cifrado, o decifrado ou os dois (tendo seu uso reaproveitado)
  *                   char text -> vetor/ponteiro para vetor que guarda o texto original
  *                   int size -> tamanho depois da encriptacao ou decriptacao
+ *                   char file_text -> guarda o texto do arquivo
  * Variáveis Globais Usadas : 
  * Variáveis Globais Alteradas : NENHUMA
 */
@@ -107,10 +108,10 @@ int main (int argc, char *argv[]) {
         char file_text[4000];
         
         if(read_from_file(file_text, 4000, argv[2]) == OK) {
-	     strcat(text, file_text);
-             size = encrypt(dest, text, strlen(text), decrypt_key);
-        
-             printf("%s", dest); 
+            strcat(text, file_text);
+            size = encrypt(dest, text, strlen(text), decrypt_key);
+
+            printf("%s", dest);
         }else {
             printf("Error While Reading from File.\n");
         }

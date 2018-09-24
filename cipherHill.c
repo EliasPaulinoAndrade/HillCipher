@@ -169,30 +169,6 @@ int matrix_multiply(int s_width, int f_height, int f_width, int result[][s_width
     return OK;
 }
 
-/*Função : NAO ESTA SENDO USADA ... REAVALIAR A NECESSIDADE DA PRESENCA NO CODIGO
- * 
- * Entrada : 
- * Retorno : 
- * Saída   : 
- 
- * Variáveis Locais: 
- * Variáveis Globais Usadas : NENHUMA
- * Variáveis Globais Alteradas : NENHUMA
-*/
-int modular_inverse(int num, int base){
-
-    /*encontra o inverso modular de um numero em uma certa base*/
-    int inverse;
-    for(inverse = 1; inverse < base; inverse++) {
-        
-        /*o inverso em um numero em uma base um numero cuja multiplicacao por ele da resto 1 na tal base*/
-        if((inverse * num) % base == 1) {
-            return inverse;
-        }
-    }
-    return WRONG;
-}
-
 /*Função : Transformar todos os caracteres de um vetor de caracteres (string) em lower case
  * 
  * Entrada : char *text -> vetor/Ponteiro para vetor text (cadeia de caracteres origem)
@@ -218,7 +194,7 @@ void string_to_lower_case(char *text, int text_size) {
  *           char *text -> vetor/ponteiro para vetor text, que guarda o texto origem, 
  *           int text_size -> tamanho da cadeia de caracteres do vetor text, 
  *           char *exceptions -> vetor/ponteiro para vetor exceptions, que guarda os caracteres indesejados
- * Retorno : dest_counter -> tamanho do vetor desti
+ * Retorno : dest_counter -> tamanho do vetor dest
  * Saída   : NENHUMA
  
  * Variáveis Locais: int dest_counter -> contador vetor destino, 
@@ -364,7 +340,7 @@ int encrypt(char *dest, char *text, int text_size, int key_matrix[][GAP]) {
     return text_size;
 }
 
-/*Função : Escrever o texto no arquivo (...)
+/*Função : Escrever o texto no arquivo especifico dado pelo usuario
  * 
  * Entrada : char *text -> vetor/ponteiro para vetor texto, com o texto que sera escrito
  *           char *file_path -> vetor/ponteiro para vetor, com o nome do arquivo em que o texto sera escrito
@@ -388,7 +364,7 @@ int write_to_file(char *text, char *file_path) {
     return OK;
 }
 
-/*Função : Ler o texto de um arquivo (...)
+/*Função : Ler o texto de um arquivo especifico dado pelo usuario
  * 
  * Entrada : char *dest -> vetor/ponteiro para vetor em que sera guardada o texto lido
  *           int max_size -> tamanho maximo que o texto pode ter
@@ -397,17 +373,20 @@ int write_to_file(char *text, char *file_path) {
  * Saída   : NENHUMA
  
  * Variáveis Locais: File *file -> guarda a referencia para o arquivo aberto do qual o texto sera lido
+ *                   int c -> caractere do arquivo padrao de entrada
+ *                   int i -> contador de quantos caracteres eu ja li
  * Variáveis Globais Usadas : NENHUMA
  * Variáveis Globais Alteradas : NENHUMA
 */
 int read_from_file(char *dest, int max_size, char *file_path) {
+    
+    int c, i = 0;
     FILE *file = fopen(file_path, "r");
     
     if(file == NULL) {
         return WRONG;
     }
     
-    int c, i = 0;
     while ((c = getc(file)) != EOF && i < max_size - 1) {
         dest[i++] = c;
     }
