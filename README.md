@@ -30,8 +30,7 @@ Esse material possui configuracoes possiveis que envolvem matrizes chaves de tam
 - config2x2_26.c -> possui uma matriz chave 2x2 e sua inversa modular, alfabeto com 26 letras (A-Z);
 - config2x2_30.c -> possui uma matriz chave 2x2 e sua inversa modular, alfabeto com 30 letras (A-Z; "."; " "; ","; "\n"), ou seja, alfabeto com alguns caracteres pre-definidos;
 - config4x4_26 -> possui uma matriz chave 4x4 e sua inversa modular, alfabeto com 26 letras (A-Z);
-- config4x4_30 -> possui uma matriz chave 4x4 e sua inversa modular, alfabeto com 30 letras (A-Z; "."; " "; ","; "\n"), ou seja, alfabeto com alguns 
-- caracteres pre-definidos.
+- config4x4_30 -> possui uma matriz chave 4x4 e sua inversa modular, alfabeto com 30 letras (A-Z; "."; " "; ","; "\n"), ou seja, alfabeto com alguns caracteres pre-definidos.
 
 Para usar essas configuracoes eh necessario da include dos arquivos (#include<configuracao desejavel>). Tambem eh possivel criar e usar configuracoes personalizadas seguindo
  o padrao das existentes.
