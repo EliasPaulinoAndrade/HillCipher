@@ -34,9 +34,6 @@
 *                                        caracteres pre-definidos
 * Para usar essas configuracoes eh necessario da include dos arquivos (#include<configuracao desejavel>). Tambem eh possivel criar e usar configuracoes personalizadas seguindo
 * o padrao das existentes.
-*
-*
-* Para informacoes sobre escolha da matriz chave (encrypt_key) - restricoes e caracteristicas, como chegar na matriz inversa modular (decrypt_key) e funcionamento da * Cifra de Hill de maneira geral consulte o "README"
 */
 
 #include "config4x4_30.c"
