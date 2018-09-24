@@ -8,8 +8,8 @@ Informações gerais sobre a Cifra de Hill, a escolha da matriz e a transformaç
 O presente algoritmo foi implementado com referencia a Cifra de Hill desenvolvida em 1929 por Lester S. Hill, sendo um trabalho concebido para a disciplina de Sistemas Embarcados do Curso de Engenharia de Computacao do IFCE - Campus Fortaleza. 
 
  As seguintes fontes foram usadas como referencia: Cifra de Hill <cts.luziania.ifg.edu.br/index.php/CTS1/article/download/100/pdf_30>, 
- Uma adaptação da Cifra de Hill para estudo de matrizes <http://www.repositorio.ufop.br/bitstream/123456789/9170/1/DISSERTA%C3%87%C3%83O_Adapta%C3%A7%C3%A3oCifraHill.pdf> 
- e Criptografia e Algebra <http://www.mat.ufmg.br/~marques/CRIPTOGRAFIA.pdf>. 
+ Uma adaptação da Cifra de Hill para estudo de matrizes < http://www.repositorio.ufop.br/bitstream/123456789/9170/1/DISSERTA%C3%87%C3%83O_Adapta%C3%A7%C3%A3oCifraHill.pdf > 
+ e Criptografia e Algebra < http://www.mat.ufmg.br/~marques/CRIPTOGRAFIA.pdf >. 
 
  - Copyright (C) 2018 Elias Paulino <eliaspaulinoandrade@gmail.com>
  - Copyright (C) 2018 Cibele Paulino <cibelepandrade@gmail.com>
@@ -79,4 +79,5 @@ Dessa forma, se o determinante da matriz inicial for 3, o seu inverso modular se
 Se quisermos decifrar a mensagem codificada para mensagem comum, basta aplicar a matriz inversa em cada um dos vetores cifrados, isto é, multiplicamos a esquerda a matriz inversa de A por cada um dos vetores cifrados, e assim obtemos os equivalentes alfabéticos destes vetores que fornecem a mensagem já decifrada.
 
 Para usar alfabetos alternativos, como com 30 caracteres/letras, basta basear a escolha da matriz com determinannte coprimo de 30 e fazer todas as operações utilizando o modulo de 30. 
+
 
