@@ -24,7 +24,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "config4x4_30.c"
 
 #define TRUE 1
 #define FALSE 0
@@ -426,78 +425,5 @@ int read_from_file(char *dest, int max_size, char *file_path) {
     return OK;
 }
 
-/*Função : 
- * 
- * Entrada : 
- * Retorno : 
- * Saída   : 
- 
- * Variáveis Locais: 
- * Variáveis Globais Usadas : NENHUMA
- * Variáveis Globais Alteradas : NENHUMA
-*/
-int main (int argc, char *argv[]) {
-    
-    char dest[4000];
-    char text[4000] = "";
-    int size;
-    
-    if(argc == 3 && strcmp(argv[1], "enc") == 0) {
-        strcat(text, argv[2]);
-        
-        size = encrypt(dest, text, strlen(text), encrypt_key);
-        printf("%s", dest);
-        
-    }
-    else if(argc == 3 && strcmp(argv[1], "dec") == 0) {
-        strcat(text, argv[2]);
-        
-        size = encrypt(dest, text, strlen(text), decrypt_key);
-        printf("%s", dest);
-        
-    }else if(argc == 2 && strcmp(argv[1], "example") == 0) {
-        strcat(text, TEXT_EXAMPLE);
 
-        size = encrypt(dest, text, strlen(text), encrypt_key);
-        printf("Cifrado: {%s}\n\n", dest);
-
-		size = encrypt(text, dest, size, decrypt_key);
-        printf("Decrifrado: {%s}\n", text);
-	
-    }else if(argc == 3 && strcmp(argv[1], "example") == 0) {
-        strcat(text, argv[2]);
-
-        size = encrypt(dest, text, strlen(text), encrypt_key);
-        printf("Cifrado: {%s}\n\n", dest);
-
-		size = encrypt(text, dest, size, decrypt_key);
-        printf("Decrifrado: {%s}\n", text);
-	
-    }
-    else if(argc == 5 && strcmp(argv[1], "enc") == 0 && strcmp(argv[3], "toFile") == 0) {
-        strcat(text, argv[2]);
-        
-        size = encrypt(dest, text, strlen(text), encrypt_key);
-        if(write_to_file(dest, argv[4]) == OK) {
-            printf("Done.\n");
-        }else {
-            printf("Error While Writing in File.\n");
-        }
-    }else if(argc == 3 && strcmp(argv[1], "decFromFile") == 0) {
-        char file_text[4000];
-        
-        if(read_from_file(file_text, 4000, argv[2]) == OK) {
-	     strcat(text, file_text);
-             size = encrypt(dest, text, strlen(text), decrypt_key);
-        
-             printf("%s", dest); 
-        }else {
-            printf("Error While Reading from File.\n");
-        }
-    }
-    else {
-        printf("Invalid Command.\n");
-    }
-    return 0;
-}
 
