@@ -1,3 +1,16 @@
+/* 
+* file: config2x2_30.c
+* Authors: Elias Paulino e Cibele Paulino
+*
+* Configuracao com matriz 2x2 e alfabeto com 30 letras/caracteres
+*
+* Copyright (C) 2018 Elias Paulino <eliaspaulinoandrade@gmail.com>
+* Copyright (C) 2018 Cibele Paulino <cibelepandrade@gmail.com>
+* Data de atualização: 23 de setembro de 2018
+*
+* Para informacoes sobre escolha da matriz chave (encrypt_key) - restricoes e caracteristicas, como chegar na matriz inversa modular (decrypt_key) e funcionamento da * Cifra de Hill de maneira geral consulte o "README"
+*/
+
 #define TEXT_EXAMPLE "Todas estas questoes, devidamente ponderadas, levantam duvidas sobre se a mobilidade dos capitais internacionais possibilita uma melhor visao global dos paradigmas corporativos. Acima de tudo, e fundamental ressaltar que a estrutura atual da organizacao pode nos levar a considerar a reestruturacao do retorno esperado a longo prazo. O incentivo ao avanco tecnologico, assim como a continua expansao de nossa atividade agrega valor ao estabelecimento do sistema de formacao de quadros que corresponde as necessidades. Caros amigos, o surgimento do comercio virtual oferece uma interessante oportunidade para verificacao do sistema de participacao geral. A nivel organizacional, o desenvolvimento continuo de distintas formas de atuacao afeta positivamente a correta previsao dos procedimentos normalmente adotados. \n\
 No entanto, nao podemos esquecer que o consenso sobre a necessidade de qualificacao exige a precisao e a definicao da gestao inovadora da qual fazemos parte. Podemos ja vislumbrar o modo pelo qual o comprometimento entre as equipes maximiza as possibilidades por conta do orcamento setorial. A certificacao de metodologias que nos auxiliam a lidar com o aumento do dialogo entre os diferentes setores produtivos nos obriga a analise de alternativas as solucoes ortodoxas. \n\
 Desta maneira, a valorizacao de fatores subjetivos e uma das consequencias dos metodos utilizados na avaliacao de resultados. Todavia, o julgamento imparcial das eventualidades estimula a padronizacao dos conhecimentos estrategicos para atingir a excelencia. Ainda assim, existem duvidas a respeito de como a complexidade dos estudos efetuados deve passar por modificacoes independentemente das direcoes preferenciais no sentido do progresso. \n\

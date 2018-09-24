@@ -2,21 +2,13 @@
 * file: cipherHill.c
 * Authors: Elias Paulino e Cibele Paulino
 *
-* Entrada: Sequencia de caracteres a ser codificada                                                                                         (ajeitar aqui)
-* Saida: Sequencia de caracteres codificada e a sequencia decodificada
-*
-* Plataforma Alvo: Raspberry pi 3
-* 
-* O presente algoritmo foi implementado com referencia a Cifra de Hill desenvolvida em 1929 por Lester S. Hill, sendo um  
-* trabalho concebido para a disciplina de Sistemas Embarcados do Curso de Engenharia de Computacao do IFCE - Campus Fortaleza. 
-*
-* As seguintes fontes foram usadas como referencia: Cifra de Hill <cts.luziania.ifg.edu.br/index.php/CTS1/article/download/100/pdf_30>, 
-* Uma adaptação da Cifra de Hill para estudo de matrizes <http://www.repositorio.ufop.br/bitstream/123456789/9170/1/DISSERTA%C3%87%C3%83O_
-* Adapta%C3%A7%C3%A3oCifraHill.pdf> e Criptografia e Algebra <http://www.mat.ufmg.br/~marques/CRIPTOGRAFIA.pdf>. 
+* Metodos/Funcoes usadas para implementar a Cifra de Hill
 *
 * Copyright (C) 2018 Elias Paulino <eliaspaulinoandrade@gmail.com>
 * Copyright (C) 2018 Cibele Paulino <cibelepandrade@gmail.com>
 * Data de atualização: 23 de setembro de 2018
+*
+* Para informacoes sobre escolha da matriz chave (encrypt_key) - restricoes e caracteristicas, como chegar na matriz inversa modular (decrypt_key) e funcionamento da * Cifra de Hill de maneira geral consulte o "README"
 */
 
 
