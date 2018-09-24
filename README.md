@@ -49,6 +49,7 @@ Primeiro converte-se as letras em números, logo após agrupa-se os números 2 a
 Caso algum resultado da multiplicação seja um número maior que o número de letras do alfabeto utilizado, assim utiliza-se o resto da divisão desse número pelo número de letras do alfabeto, que no nosso caso é 26, pois estamos considerando o alfabeto Inglês. Supõe-se que cada letra de texto comum (mensagem que ainda não foi codificada) e de texto cifrado, excetuando o Z, tem o valor numérico que especifica sua posição no alfabeto padrão.
 
 A B C D E F G H I J  L  K  M  N  O  P  Q  R  S  T  U  V  W  X  Y  Z
+
 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 
 
 Escolhe-se uma matriz 2×2 com entradas inteiras para efetuar a codificação,  M = [a1,1 a1,2 | a2,1 a2,2] que seja inversível, e que seu determinante seja coprimo com 26, isto é, não possua fatores primos em comum, esta condição é importante para podermos encontrar a inversa dessa matriz módulo 26.
@@ -71,6 +72,7 @@ A(inverso) = (a 11 a 22 − a 12 a 21 ) (inverso) . [a1,1 -a1,2 | -a2,1 a2,2] mo
 
 Para facilitar, o inverso modular do determinante da matriz inicial na base 26 pode ser obtido com o auxilio da sequencia abaixo:
 a           1  3  5  7  9  11  15  17  19  21  23  25
+
 a(inverso)  1  9 21  15 3  19  7   23  11   5  17  25 
 
 Dessa forma, se o determinante da matriz inicial for 3, o seu inverso modular será 9. Esse valor será então multiplicado com a matriz adjunta da matriz inicial. Por fim, faz-se o mod(26) da matriz resultante. Obtendo-se então a matriz chave para decriptar o texto.  
