@@ -1,5 +1,4 @@
- 
- file: README
+ * Cifra de Hill
  Authors: Elias Paulino e Cibele Paulino
 
  Informações gerais sobre a Cifra de Hill, a escolha da matriz e a transformação dessa matriz na sua inversa modular.
@@ -17,7 +16,7 @@
  Copyright (C) 2018 Cibele Paulino <cibelepandrade@gmail.com>
  Data de atualização: 23 de setembro de 2018
  
- Modo de Uso: 
+ ** Modo de Uso: 
  Os comando possiveis sao: enc <texto> -> encripta um texto e mostra na saida
                            dec <texto>-> decripta um texto e mostra na saida
                            example -> encripta e decripta um texto predefinido, com mais de 3000 caracteres, e depois mostra o resultado de ambos
@@ -38,13 +37,13 @@
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Cifra de Hill
+* Sobre a Cifra de Hill
 
 Cifra de Hill (Criptografia em alfabeto algébrico) é um método criptográfico que foi inventado pelo matemático americano Lester S. Hill em 1929. Ele utiliza-se da álgebra linear para codificar e decodificar uma mensagem através da multiplicação de matrizes.
 
 Abaixo, o estudo refere-se a cifragem utilizando uma matriz 2x2 e com o alfabeto padrão de 26 letras.
 
-* Codificar
+** Codificar
 Primeiro converte-se as letras em números, logo após agrupa-se os números 2 a 2 e multiplicam-se cada grupo por uma matriz quadrada de ordem 2, que seja inversível (ou seja, com determinante ≠ 0). Os números resultantes são novamente passados para letras, e assim tem-se a mensagem codificada.
 Caso algum resultado da multiplicação seja um número maior que o número de letras do alfabeto utilizado, assim utiliza-se o resto da divisão desse número pelo número de letras do alfabeto, que no nosso caso é 26, pois estamos considerando o alfabeto Inglês. Supõe-se que cada letra de texto comum (mensagem que ainda não foi codificada) e de texto cifrado, excetuando o Z, tem o valor numérico que especifica sua posição no alfabeto padrão.
 
@@ -65,7 +64,7 @@ Teorema : Dados um inteiro a e um módulo m, quaisquer, se R = resto de |a|/m en
                                             r = m-R se a < 0 e R != 0
                                             r = 0 se a < 0 e R != 0
 
-* Decodificar
+** Decodificar
 Primeiro transforma-se a matriz inicial na sua matriz inversa modular. Em Aritmética Modular, uma matriz quadrada é invertível se, e somente se, det A ≠ 0. A inversa de det A(mod 26) é dada por:
 A(inverso) = (a 11 a 22 − a 12 a 21 ) (inverso) . [a1,1 -a1,2 | -a2,1 a2,2] mod(26)
 
