@@ -35,11 +35,11 @@
 
 /*Função : Transformar um caractere em um correspondente numerico
  * 
- * Entrada : Um caractere
- * Retorno : Correspondente numerico do caractere ou -1 (WRONG)
+ * Entrada : char c -> caractere inicial
+ * Retorno : Correspondente numerico do caractere inicial ou -1 (WRONG)
  * Saída   : NENHUMA 
  
- * Variáveis Locais: num -> guarda o correspondente numerico do caractere ou -1 caso nao tenha representacao no alfabeto utilizado
+ * Variáveis Locais: int num -> guarda o correspondente numerico do caractere ou -1 caso nao tenha representacao no alfabeto utilizado
  * Variáveis Globais Usadas : NENHUMA
  * Variáveis Globais Alteradas : NENHUMA
 */
@@ -75,11 +75,11 @@ int char_to_number(char c) {
 
 /*Função : Transformar um numero em um caractere correspondente
  * 
- * Entrada : Um numero
- * Retorno : Caractere correspondente do numero ou -1 (WRONG)
+ * Entrada : int i -> numero inicial
+ * Retorno : Caractere correspondente do numero inicial ou -1 (WRONG)
  * Saída   : NENHUMA 
  
- * Variáveis Locais: charc -> guarda o caractere correspondente do numero ou -1 caso nao tenha representacao no alfabeto utilizado
+ * Variáveis Locais: char charc -> guarda o caractere correspondente do numero ou -1 caso nao tenha representacao no alfabeto utilizado
  * Variáveis Globais Usadas : NENHUMA
  * Variáveis Globais Alteradas : NENHUMA
 */
@@ -116,11 +116,15 @@ char number_to_char(int i) {
 
 /*Função : Mostrar o tamanho x profundidade de uma matriz, assim como uma matriz qualquer na saida
  * 
- * Entrada : Width da matriz, height da matriz e a matriz
+ * Entrada : int width -> width da matriz, 
+ *           int height -> height da matriz,
+ *           int matrix -> matriz
  * Retorno : NADA
- * Saída   : Tamanho da matriz no formato "width: x, height: y" e matriz no formato n x n 
+ * Saída   : Tamanho da matriz no formato "width: x, height: y",
+ *           matriz no formato n x n 
  
- * Variáveis Locais: col -> guarda a coluna atual, row -> guarda a linha atual.
+ * Variáveis Locais: int col -> guarda a coluna atual, 
+ *                   int row -> guarda a linha atual.
  * Variáveis Globais Usadas : NENHUMA
  * Variáveis Globais Alteradas : NENHUMA
 */
@@ -139,14 +143,31 @@ void matrix_show(int width, int height, int matrix[][width]) {
     }
 }
 
+/*Função : Multiplicar duas matrizes dadas (f_matrix e s_matrix) e guardar o resultado numa terceira matriz dada (result). Sendo que o numero 
+ *         de colunas da primeira matriz (f_matrix) deve ser igual ao numero de linhas da segunda matriz (s_matrix)
+ * 
+ * Entrada : int s_width -> width da s_matriz
+ *           int f_height -> height da f_matrix
+ *           int f_width -> width da f_matrix
+ *           int result -> matriz que guardara o resultado da multiplicacao
+ *           int f_matrix -> primeira matriz
+ *           int s_matrix -> segunda matriz
+ * Retorno : 0 (OK)
+ * Saída   : NENHUMA
+ 
+ * Variáveis Locais: pivo -> representa f_col e o s_row, que incrementam de forma igual,
+ *                   f_row -> guarda a linha atual da primeira matriz
+ *                   s_col -> guarda a coluna atual da segunda matriz
+ * Variáveis Globais Usadas : NENHUMA
+ * Variáveis Globais Alteradas : NENHUMA
+*/
 int matrix_multiply(int s_width, int f_height, int f_width, int result[][s_width], int f_matrix[][f_width], int s_matrix[][s_width]) {
 
-    /*multiplica duas matrizes*/
-
-    /*o pivo eh o f_col e o s_row, que sao os mesmos*/
     int pivo, f_row, s_col;
     for(f_row = 0; f_row < f_height; f_row++) {
+
         for(s_col = 0; s_col < s_width; s_col++) {
+
             result[f_row][s_col] = 0;
             for(pivo = 0; pivo < f_width; pivo++) {
                 
@@ -157,6 +178,16 @@ int matrix_multiply(int s_width, int f_height, int f_width, int result[][s_width
     return OK;
 }
 
+/*Função : NAO ESTA SENDO USADA ... REAVALIAR A NECESSIDADE DA PRESENCA NO CODIGO
+ * 
+ * Entrada : 
+ * Retorno : 
+ * Saída   : 
+ 
+ * Variáveis Locais: 
+ * Variáveis Globais Usadas : NENHUMA
+ * Variáveis Globais Alteradas : NENHUMA
+*/
 int modular_inverse(int num, int base){
 
     /*encontra o inverso modular de um numero em uma certa base*/
@@ -171,6 +202,17 @@ int modular_inverse(int num, int base){
     return WRONG;
 }
 
+/*Função : Transformar todos os caracteres de um vetor de caracteres (string) em lower case
+ * 
+ * Entrada : char *text -> vetor/Ponteiro para vetor text (cadeia de caracteres origem)
+ *           int text_size -> tamanho da cadeia de caracteres do vetor text
+ * Retorno : NADA
+ * Saída   : NENHUMA
+ 
+ * Variáveis Locais: int i -> contador do vetor text
+ * Variáveis Globais Usadas : NENHUMA
+ * Variáveis Globais Alteradas : NENHUMA
+*/
 void string_to_lower_case(char *text, int text_size) {
 
     int i;
@@ -179,7 +221,22 @@ void string_to_lower_case(char *text, int text_size) {
     }
 }
 
-
+/*Função : Cria um novo texto, que possui apenas os caracteres desejados do texto origem
+ * 
+ * Entrada : char *dest -> Vetor/Ponteiro para vetor dest, que guardara os caracteres presentes no vetor origem que sejam validos,
+ *           char *text -> vetor/ponteiro para vetor text, que guarda o texto origem, 
+ *           int text_size -> tamanho da cadeia de caracteres do vetor text, 
+ *           char *exceptions -> vetor/ponteiro para vetor exceptions, que guarda os caracteres indesejados
+ * Retorno : 
+ * Saída   : NENHUMA
+ 
+ * Variáveis Locais: int dest_counter -> contador vetor destino, 
+ *                   int text_counter -> contador do texto origem,
+ *                   int except_counter -> contador do vetor de excessoes,
+ *                   int has_exceptions -> guarda um TRUE ou FALSE (tem ou nao excessoes)
+ * Variáveis Globais Usadas : NENHUMA
+ * Variáveis Globais Alteradas : NENHUMA
+*/
 int remove_unwanted_words(char *dest, char *text, int text_size, char *exceptions) {
 
     /*remove os espacos do texto*/
