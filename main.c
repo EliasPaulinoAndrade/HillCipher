@@ -32,11 +32,13 @@
 *                        config4x4_26 -> possui uma matriz chave 4x4 e sua inversa modular, alfabeto com 26 letras (A-Z)
 *                        config4x4_30 -> possui uma matriz chave 4x4 e sua inversa modular, alfabeto com 30 letras (A-Z; "."; " "; ","; "\n"), ou seja, alfabeto com alguns 
 *                                        caracteres pre-definidos
+*						 config7x7_30 -> possui uma matriz chave 7x7 e sua inversa modular, alfabeto com 30 letras (A-Z; "."; " "; ","; "\n"), ou seja, alfabeto com alguns 
+*                                        caracteres pre-definidos
 * Para usar essas configuracoes eh necessario da include dos arquivos (#include<configuracao desejavel>). Tambem eh possivel criar e usar configuracoes personalizadas seguindo
 * o padrao das existentes.
 */
 
-#include "config4x4_30.c"
+#include "config7x7_30.c"
 #include "cipherHill.c"
 
 /*Função : Cifrar ou decifrar um texto fornecido com base em uma matriz chave 
