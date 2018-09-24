@@ -227,7 +227,7 @@ void string_to_lower_case(char *text, int text_size) {
  *           char *text -> vetor/ponteiro para vetor text, que guarda o texto origem, 
  *           int text_size -> tamanho da cadeia de caracteres do vetor text, 
  *           char *exceptions -> vetor/ponteiro para vetor exceptions, que guarda os caracteres indesejados
- * Retorno : 
+ * Retorno : dest_counter -> tamanho do vetor desti
  * Saída   : NENHUMA
  
  * Variáveis Locais: int dest_counter -> contador vetor destino, 
@@ -238,8 +238,6 @@ void string_to_lower_case(char *text, int text_size) {
  * Variáveis Globais Alteradas : NENHUMA
 */
 int remove_unwanted_words(char *dest, char *text, int text_size, char *exceptions) {
-
-    /*remove os espacos do texto*/
     
     int dest_counter, text_counter, except_counter, has_exceptions;
     dest_counter = text_counter = except_counter = has_exceptions = 0;
@@ -266,17 +264,28 @@ int remove_unwanted_words(char *dest, char *text, int text_size, char *exception
     return dest_counter;
 }
 
+/*Função : Adiciona ao texto caractere(s) para que o numero de letras presente nesse texto seja multiplo da ordem da matriz (GAP)
+ * 
+ * Entrada : char *text -> vetor/ponteiro para vetor text, que guarda o texto origem, 
+ *           int text_size -> tamanho da cadeia de caracteres do vetor text
+ * Retorno : O novo tamanho que o texto possui (tamanho original + numero de caracteres adicionados)
+ * Saída   : NENHUMA
+ 
+ * Variáveis Locais: int space_to_fill -> guarda a quantidade de caracteres que devem ser acrescentados ao texto para que ele
+ *                   tenha o numero de caracteres multiplo do GAP,
+ *                   int i -> contador usado para adicionar os caracteres ao texto
+ * Variáveis Globais Usadas : NENHUMA
+ * Variáveis Globais Alteradas : NENHUMA
+*/
 int fill_missing_spaces(char *text, int text_size) {
-
-    /*preenche o texto para que ele tenha numero de letras multiplo do gap*/
     
+    int i;
     int space_to_fill = text_size % GAP;   
     
     if(space_to_fill > 0){
         space_to_fill = (GAP - space_to_fill);
     }
 
-    int i;
     for (i = 0; i < space_to_fill; i++){
 
         text[text_size + i] = FILL_CHAR;
@@ -287,6 +296,19 @@ int fill_missing_spaces(char *text, int text_size) {
     return text_size + space_to_fill;
 }
 
+/*Função : Formata o texto origem, chamando a funcao que deixa o texto lower case, a funcao que remove os caracteres indesejados, e a funcao que acrescenta os
+ *         caracteres quando necessario
+ * 
+ * Entrada : char *dest -> Vetor/Ponteiro para vetor dest, que guardara o texto formatado,
+ *           char *text -> vetor/ponteiro para vetor text, que guarda o texto origem, 
+ *           int text_size -> tamanho da cadeia de caracteres do vetor text
+ * Retorno : int text_size -> com o novo tamanho do texto
+ * Saída   : NENHUMA
+ 
+ * Variáveis Locais: NENHUMA
+ * Variáveis Globais Usadas : NENHUMA
+ * Variáveis Globais Alteradas : NENHUMA
+*/
 int format_text(char *dest, char *text, int text_size) {
 
     string_to_lower_case(text, text_size);
@@ -296,9 +318,25 @@ int format_text(char *dest, char *text, int text_size) {
     return text_size;
 }
 
+/*Função : Codifica o texto fornecido, usando uma matriz chave
+ * 
+ * Entrada : char *dest -> guardara o texto codificado,
+ *           char *text -> guarda o texto original,
+ *           int text_size -> tamanho da cadeia de caracteres do vetor text,
+ *           int key_matrix -> matriz usada como chave para codificar o texto
+ * Retorno : retorna o text_size com o novo tamanho do texto
+ * Saída   : NENHUMA
+ 
+ * Variáveis Locais: char accord_text -> vetor de caracteres com o texto formatado
+ *                   int gap_items -> matrix coluna que guardara cada bloco de caracteres
+ *                   int mult_items -> matriz que guardara o matriz resultante da multiplicacao da matriz chave com gap_items
+ *                   int pivo -> guarda o inicio de cada bloco de caracteres
+ *                   int i -> contador é usado para percorrer o bloco de caracteres atual e, posteriormente a matriz resultante da multiplicacao
+ * Variáveis Globais Usadas : NENHUMA
+ * Variáveis Globais Alteradas : NENHUMA
+*/
 int encrypt(char *dest, char *text, int text_size, int key_matrix[][GAP]) {
 
-    /*encripta o texto usando uma matrix chave*/
     char accord_text[4000];
 
     text_size = format_text(accord_text, text, text_size);
@@ -306,17 +344,17 @@ int encrypt(char *dest, char *text, int text_size, int key_matrix[][GAP]) {
     int gap_items[GAP][1];
     int mult_items [GAP][1];
     int pivo, i;
-
+     
+    //separa os caracteres em blocos, buscando o correspondente numerico de cada caracter
     for(pivo = 0; pivo < text_size; pivo += GAP) {
         for(i = pivo; i < pivo + GAP; i++) {
 
             gap_items[i - pivo][0] = char_to_number(accord_text[i]);
         }
-
+        //multiplicando a matriz chave pela coluna
         matrix_multiply(1, GAP, GAP, mult_items, key_matrix, gap_items);
-        //matrix_show(1, 4, gap_items);
         
-
+        //modulo do correspondente numerico na base do tamanho do alfabeto, e transforma num caracter correspondente (com base no teorema do pdf)
         for(i = 0; i < GAP; i++) {            
             if(mult_items[i][0] < 0) {
                 if((-mult_items[i][0] % ALPHABET_SIZE) == 0) {
@@ -329,14 +367,23 @@ int encrypt(char *dest, char *text, int text_size, int key_matrix[][GAP]) {
             else{                
                 dest[pivo + i] = number_to_char(mult_items[i][0] % ALPHABET_SIZE);        
             }
-           // printf("%d - %c\n", mult_items[i][0], dest[pivo + i]);
-
         }
     }
     dest[text_size] = '\0';
     return text_size;
 }
 
+/*Função : Escrever o texto no arquivo (...)
+ * 
+ * Entrada : char *text -> vetor/ponteiro para vetor texto, com o texto que sera escrito
+ *           char *file_path -> vetor/ponteiro para vetor, com o nome do arquivo em que o texto sera escrito
+ * Retorno : retorna 0 (OK) ou -1 (WRONG)
+ * Saída   : texto no arquivo (...)
+ 
+ * Variáveis Locais: File *file -> guarda a referencia para o arquivo aberto em que o texto sera escrito
+ * Variáveis Globais Usadas : NENHUMA
+ * Variáveis Globais Alteradas : NENHUMA
+*/
 int write_to_file(char *text, char *file_path) {
     FILE *file = fopen(file_path, "w");
     
@@ -350,6 +397,18 @@ int write_to_file(char *text, char *file_path) {
     return OK;
 }
 
+/*Função : Ler o texto de um arquivo (...)
+ * 
+ * Entrada : char *dest -> vetor/ponteiro para vetor em que sera guardada o texto lido
+ *           int max_size -> tamanho maximo que o texto pode ter
+ *           char *file_path -> vetor/ponteiro para vetor, com o nome do arquivo do qual o texto sera lido
+ * Retorno : retorna 0 (OK) ou -1 (WRONG)
+ * Saída   : NENHUMA
+ 
+ * Variáveis Locais: File *file -> guarda a referencia para o arquivo aberto do qual o texto sera lido
+ * Variáveis Globais Usadas : NENHUMA
+ * Variáveis Globais Alteradas : NENHUMA
+*/
 int read_from_file(char *dest, int max_size, char *file_path) {
     FILE *file = fopen(file_path, "r");
     
@@ -367,6 +426,16 @@ int read_from_file(char *dest, int max_size, char *file_path) {
     return OK;
 }
 
+/*Função : 
+ * 
+ * Entrada : 
+ * Retorno : 
+ * Saída   : 
+ 
+ * Variáveis Locais: 
+ * Variáveis Globais Usadas : NENHUMA
+ * Variáveis Globais Alteradas : NENHUMA
+*/
 int main (int argc, char *argv[]) {
     
     char dest[4000];
