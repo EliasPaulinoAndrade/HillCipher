@@ -13,6 +13,7 @@ O presente algoritmo foi implementado com referencia a Cifra de Hill desenvolvid
 
  - Copyright (C) 2018 Elias Paulino <eliaspaulinoandrade@gmail.com>
  - Copyright (C) 2018 Cibele Paulino <cibelepandrade@gmail.com>
+ 
  Data de atualização: 23 de setembro de 2018
  
  ## Modo de Uso: 
